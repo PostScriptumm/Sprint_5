@@ -7,17 +7,24 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.chrome.options import Options
 
-from tests.locators import (login_input, password_input, login_button, main_account_button, order_button,
-                            fillings_button, fillings_button_activ, change_personal_data)
+from tests.locators import LoginPageLocators, MainPageLocators, PersonalPageLocators
+from tests.data import UserLoginData, UrlPageData
 
-
-@pytest.fixture
 # фикстура options
+@pytest.fixture
 def options():
     options = Options()
     options.add_argument("--windows-size=1920,1080")
     options.add_argument("--headless")
     return options
+
+
+# фикстура setup_teardown
+@pytest.fixture
+def driver(options):
+    driver = webdriver.Chrome(options=options)
+    yield driver
+    driver.quit()
 
 
 # фикстура генерации нового логина(email) для регистрации
@@ -34,33 +41,31 @@ def generate_password():
     return ''.join((random.choice(string.ascii_letters + string.digits) for x in range(10)))
 
 
-# фикстура логирования существующего пользователя в системе и переход в личный кабинет
+# фикстура логирования существующего пользователя в системе
 @pytest.fixture
-def login_personal_account(options):
-    driver = webdriver.Chrome(options=options)
-    driver.get('https://stellarburgers.nomoreparties.site/login')
-    driver.find_element(By.XPATH, login_input).send_keys('andreytebenkov3000@yandex.ru')
-    driver.find_element(By.XPATH, password_input).send_keys('password')
-    driver.find_element(By.XPATH, login_button).click()
+def login(driver):
+    driver.get(UrlPageData.login_page)
+    driver.find_element(By.XPATH, LoginPageLocators.login_input).send_keys(UserLoginData.login)
+    driver.find_element(By.XPATH, LoginPageLocators.password_input).send_keys(UserLoginData.password)
+    driver.find_element(By.XPATH, LoginPageLocators.login_button).click()
     WebDriverWait(driver, 5) \
-        .until(expected_conditions.visibility_of_element_located((By.XPATH, order_button)))
-    driver.find_element(By.XPATH, main_account_button).click()
-    WebDriverWait(driver, 5) \
-        .until(expected_conditions.visibility_of_element_located((By.XPATH, change_personal_data)))
+        .until(expected_conditions.visibility_of_element_located((By.XPATH, MainPageLocators.order_button)))
     return driver
 
 
-# фикстура логирования существующего пользователя и переход к разделу "Начинки" на главной
+# фикстура перехода к разделу "Начинки" на главной
 @pytest.fixture
-def login_click_fillings(options):
-    driver = webdriver.Chrome(options=options)
-    driver.get('https://stellarburgers.nomoreparties.site/login')
-    driver.find_element(By.XPATH, login_input).send_keys('andreytebenkov3000@yandex.ru')
-    driver.find_element(By.XPATH, password_input).send_keys('password')
-    driver.find_element(By.XPATH, login_button).click()
+def go_to_fillings(driver, login):
+    driver.find_element(By.XPATH, MainPageLocators.fillings_button).click()
     WebDriverWait(driver, 5) \
-        .until(expected_conditions.visibility_of_element_located((By.XPATH, order_button)))
-    driver.find_element(By.XPATH, fillings_button).click()
+        .until(expected_conditions.visibility_of_element_located((By.XPATH, MainPageLocators.fillings_button_activ)))
+    return driver
+
+
+# фикстура перехода в "Личный кабинет" с главной страницы
+@pytest.fixture
+def go_to_personal(driver, login):
+    driver.find_element(By.XPATH, MainPageLocators.main_account_button).click()
     WebDriverWait(driver, 5) \
-        .until(expected_conditions.visibility_of_element_located((By.XPATH, fillings_button_activ)))
+        .until(expected_conditions.visibility_of_element_located((By.XPATH, PersonalPageLocators.change_personal_data)))
     return driver

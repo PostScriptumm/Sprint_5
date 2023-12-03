@@ -1,38 +1,54 @@
 # Страница регистрации "https://stellarburgers.nomoreparties.site/register"
-reg_login_button = './/div[1]/div/main/div/div/p/a'  # кнопка "Войти"
-reg_name_input = ".//fieldset[1]/div/div/input"  # поле ввода имени
-reg_login_input = ".//fieldset[2]/div/div/input"  # поле ввода логина
-reg_pass_input = ".//fieldset[3]/div/div/input"  # поле ввода пароля
-register_button = ".//button[text()='Зарегистрироваться']"  # кнопка "Зарегистрироваться"
-incorrect_password_message = ".//div[1]/div/main/div/form/fieldset[3]/div/p"  # сообщение 'Некорректный пароль'
+class RegPageLocators:
+
+    reg_login_button = ".//a[@href='/login']"  # кнопка "Войти"
+    reg_name_input = ".//label[text()='Имя']/following-sibling::input"  # поле ввода имени
+    reg_login_input = ".//label[text()='Email']/following-sibling::input"  # поле ввода логина
+    reg_pass_input = ".//label[text()='Пароль']/following-sibling::input"  # поле ввода пароля
+    register_button = ".//button[text()='Зарегистрироваться']"  # кнопка "Зарегистрироваться"
+    incorrect_password_message = ".//p[text()='Некорректный пароль']"  # сообщение 'Некорректный пароль'
+
 
 # Страница входа 'https://stellarburgers.nomoreparties.site/login'
-login_button = ".//div[1]/div/main/div/form/button"  # кнопка "Вход"
-login_button_text = ".//h2[text()='Вход']"  # текст кнопки "Вход"
-login_input = ".//fieldset[1]/div/div/input"  # поле ввода логина
-password_input = ".//fieldset[2]/div/div/input"  # поле ввода пароля
+class LoginPageLocators:
+
+    login_button = ".//button[text()='Войти']"  # кнопка "Войти"
+    login_button_text = ".//h2[text()='Вход']"  # надпись "Вход"
+    login_input = ".//label[text()='Email']/following-sibling::input"  # поле ввода логина
+    password_input = ".//label[text()='Пароль']/following-sibling::input"  # поле ввода пароля
+
 
 # Страница конструктора/главная 'https://stellarburgers.nomoreparties.site/'
-order_button = ".//div[1]/div/main/section[2]/div/button"  # кнопка "Оформить заказ"
-main_login_button = './/div[1]/div/main/section[2]/div/button'  # кнопка "Войти в аккаунт"
-main_account_button = './/div[1]/div/header/nav/a'  # кнопка "Личный кабинет"
-stellar_burgers_logo = './/div[1]/div/header/nav/div'  # логотип "Stellar Burgers"
-constructor_button = './/div[1]/div/header/nav/ul/li[1]/a'  # кнопка "Конструктор"
-collect_burger = ".//div[1]/div/main/section[1]/h1"  # надпись "Соберите бургер"
-fillings_button = ".//div[1]/div/main/section[1]/div[1]/div[3]"  # кнопка "Начинки"
-fillings_button_activ = ".//div[3][@class='tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect']"
-# кнопка "Начинки" если она выбрана
-sauces_button = ".//div[1]/div/main/section[1]/div[1]/div[2]"  # кнопка "Соусы"
-sauces_button_activ = ".//div[2][@class='tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect']"
-# кнопка "Соусы" если она выбрана
-buns_button = ".//div[1]/div/main/section[1]/div[1]/div[1]"  # кнопка "Булки"
-buns_button_activ = ".//div[1][@class='tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect']"
-# кнопка "Булки" если она выбрана
+class MainPageLocators:
+
+    order_button = ".//button[text()='Оформить заказ']"  # кнопка "Оформить заказ"
+    main_login_button = ".//button[text()='Войти в аккаунт']"  # кнопка "Войти в аккаунт"
+    main_account_button = ".//p[text()='Личный Кабинет']"  # кнопка "Личный кабинет"
+    stellar_burgers_logo = ".//div[@class='AppHeader_header__logo__2D0X2']"  # логотип "Stellar Burgers"
+    constructor_button = ".//p[text()='Конструктор']"  # кнопка "Конструктор"
+    collect_burger = ".//h1[text()='Соберите бургер']"  # надпись "Соберите бургер"
+    fillings_button = ".//span[text()='Начинки']/parent::div"  # кнопка "Начинки"
+    fillings_button_activ = \
+        ".//div[3][@class='tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect']"
+    # кнопка "Начинки" если она выбрана
+    sauces_button = ".//span[text()='Соусы']/parent::div"  # кнопка "Соусы"
+    sauces_button_activ = \
+        ".//div[2][@class='tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect']"
+    # кнопка "Соусы" если она выбрана
+    buns_button = ".//span[text()='Булки']/parent::div"  # кнопка "Булки"
+    buns_button_activ = ".//div[1][@class='tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect']"
+    # кнопка "Булки" если она выбрана
+
 
 # Страница восстановления пароля 'https://stellarburgers.nomoreparties.site/forgot-password'
-forgot_login_button = './/div[1]/div/main/div/div/p/a'  # кнопка "Войти"
+class ForgotPassPagelocators:
+
+    forgot_login_button = ".//a[@href='/login']"  # кнопка "Войти"
+
 
 # Страница личного кабинета 'https://stellarburgers.nomoreparties.site/account/profile'
-account_exit_button = './/div[1]/div/main/div/nav/ul/li[3]/button'  # кнопка "Выйти"
-change_personal_data = ".//div[1]/div/main/div/nav/p"
-# надпись "В этом разделе вы можете изменить свои персональные данные"
+class PersonalPageLocators:
+
+    account_exit_button = ".//button[text()='Выход']"  # кнопка "Выход"
+    change_personal_data = ".//p[text()='В этом разделе вы можете изменить свои персональные данные']"
+    # надпись "В этом разделе вы можете изменить свои персональные данные"
